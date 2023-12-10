@@ -2,10 +2,10 @@
 
 import Avatar from "@mui/material/Avatar";
 import {
+  Alert,
   Box,
   Button,
-  Checkbox,
-  FormControlLabel,
+  Container,
   Grid,
   Link as MuiLink,
   TextField,
@@ -13,9 +13,26 @@ import {
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Link from "next/link";
+import { FormEvent, useState } from "react";
 
 const Page = () => {
-  const handleSubmit = () => {};
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [emailInput, setEmailInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!emailInput || !passwordInput) {
+      setError("Preencha e-mail e senha!");
+      return;
+    }
+
+    setError("");
+    setLoading(true);
+  };
   return (
     <Box
       sx={{
@@ -36,11 +53,11 @@ const Page = () => {
           margin="normal"
           required
           fullWidth
-          id="email"
           label="E-mail"
           name="email"
-          autoComplete="email"
           autoFocus
+          onChange={(e) => setEmailInput(e.target.value)}
+          disabled={loading}
         />
         <TextField
           margin="normal"
@@ -48,21 +65,23 @@ const Page = () => {
           fullWidth
           name="password"
           label="Senha"
-          type="password"
-          id="password"
-          autoComplete="current-password"
+          type={showPassword ? "text" : "password"}
+          onChange={(e) => setPasswordInput(e.target.value)}
+          disabled={loading}
         />
-        <FormControlLabel
-          control={<Checkbox value="remember" color="primary" />}
-          label="Lembrar-me"
-        />
+        {error && (
+          <Alert variant="outlined" severity="error">
+            {error}
+          </Alert>
+        )}
         <Button
           type="submit"
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
+          disabled={loading}
         >
-          Entrar
+          {loading ? "Carregando..." : "Entar"}
         </Button>
         <Grid container>
           <Grid item xs>
