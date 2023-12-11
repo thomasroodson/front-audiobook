@@ -5,7 +5,6 @@ import {
   Alert,
   Box,
   Button,
-  Container,
   Grid,
   Link as MuiLink,
   TextField,
@@ -14,15 +13,19 @@ import {
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Link from "next/link";
 import { FormEvent, useState } from "react";
+import { api } from "@/Utils/api";
+import Cookie from "js-cookie";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const router = useRouter();
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!emailInput || !passwordInput) {
@@ -32,6 +35,23 @@ const Page = () => {
 
     setError("");
     setLoading(true);
+
+    const response = await api
+      .post("/api/auth/local", {
+        identifier: emailInput,
+        password: passwordInput
+      })
+      .then((response) => {
+        Cookie.set("AUTH_TOKEN", response.data.jwt);
+        Cookie.set("USER", JSON.stringify(response.data.user));
+        router.push("/livros");
+      })
+      .catch((e) => {
+        setLoading(false);
+        if (e.response.status === 400) {
+          setError("Verifique seu login e senha!");
+        }
+      });
   };
   return (
     <Box
@@ -65,7 +85,7 @@ const Page = () => {
           fullWidth
           name="password"
           label="Senha"
-          type={showPassword ? "text" : "password"}
+          type="password"
           onChange={(e) => setPasswordInput(e.target.value)}
           disabled={loading}
         />

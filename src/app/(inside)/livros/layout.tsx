@@ -1,26 +1,41 @@
 "use client";
-import { checkIsPublicRoute } from "@/app/Utils/Auth";
-import { usePathname } from "next/navigation";
-import { Container } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import { Footer } from "@/app/components/Footer";
-import PrivateRoute from "@/app/components/PrivateRoute";
+import Cookie from "js-cookie";
+import { useRouter } from "next/navigation";
 
 type Props = {
   children: React.ReactNode;
 };
 
 const Layout = ({ children }: Props) => {
-  const pathname = usePathname();
-  const isPublicPage = checkIsPublicRoute(pathname);
+  const router = useRouter();
 
+  const handleLogout = () => {
+    Cookie.remove("AUTH_TOKEN");
+    Cookie.remove("USER");
+    router.push("/login");
+  };
   return (
-    <>
-      <Container component="main">
-        {isPublicPage && children}
-        {!isPublicPage && <PrivateRoute>{children}</PrivateRoute>}
-      </Container>
-      <Footer />
-    </>
+    <html lang="pt-br">
+      <body>
+        <Container>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "end",
+              mt: 5
+            }}
+          >
+            <Button onClick={handleLogout} variant="contained">
+              Sair
+            </Button>
+          </Box>
+          {children}
+        </Container>
+        <Footer />
+      </body>
+    </html>
   );
 };
 

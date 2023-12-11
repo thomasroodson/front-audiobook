@@ -1,5 +1,4 @@
 "use client";
-
 import { usePathname } from "next/navigation";
 import {
   Card,
@@ -18,7 +17,7 @@ const Page = () => {
   return (
     <Box
       sx={{
-        py: 24,
+        py: 15,
         textAlign: "center"
       }}
     >
