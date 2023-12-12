@@ -17,13 +17,13 @@ const Page = () => {
   return (
     <Box
       sx={{
-        py: 15,
+        py: 10,
         textAlign: "center"
       }}
     >
       <Grid container spacing={3}>
         {cards.map((card) => (
-          <Grid item key={card} xs={12} sm={4} md={3}>
+          <Grid item key={card} xs={12} sm={4} lg={3}>
             <Card sx={{ maxWidth: 300, mx: "auto" }} elevation={3}>
               <CardActionArea>
                 <Link href={`${pathname}/test`}>

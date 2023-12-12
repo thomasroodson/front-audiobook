@@ -16,6 +16,7 @@ import { FormEvent, useState } from "react";
 import { api } from "@/Utils/api";
 import Cookie from "js-cookie";
 import { useRouter } from "next/navigation";
+import { LoggedUserContext } from "@/contexts/LoggedUser";
 
 const Page = () => {
   const [error, setError] = useState("");
@@ -43,7 +44,6 @@ const Page = () => {
       })
       .then((response) => {
         Cookie.set("AUTH_TOKEN", response.data.jwt);
-        Cookie.set("USER", JSON.stringify(response.data.user));
         router.push("/livros");
       })
       .catch((e) => {
