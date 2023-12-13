@@ -5,7 +5,7 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { Box, Container } from "@mui/material";
 import { Footer } from "@/app/components/Footer";
-import { LoggedUserProvider } from "@/contexts/LoggedUser";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 type Props = {
   children: React.ReactNode;
@@ -15,7 +15,7 @@ const Layout = ({ children }: Props) => {
   return (
     <html lang="pt-br">
       <body>
-        <LoggedUserProvider>
+        <AuthProvider>
           <Container
             component="main"
             maxWidth="xs"
@@ -27,7 +27,7 @@ const Layout = ({ children }: Props) => {
           >
             <Box>{children}</Box>
           </Container>
-        </LoggedUserProvider>
+        </AuthProvider>
         <Footer />
       </body>
     </html>

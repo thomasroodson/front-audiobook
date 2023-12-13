@@ -1,13 +1,12 @@
 import Cookie from "js-cookie";
 import { useRouter } from "next/navigation";
 import { Box, Button, Typography } from "@mui/material";
-import { LoggedUserContext } from "@/contexts/LoggedUser";
+import { AuthContext } from "@/contexts/AuthContext";
 import { useContext } from "react";
 
 export const Navbar = () => {
-  const loggedUser = useContext(LoggedUserContext);
   const router = useRouter();
-
+  const { user } = useContext(AuthContext);
   const handleLogout = () => {
     Cookie.remove("AUTH_TOKEN");
     router.push("/login");
@@ -27,7 +26,7 @@ export const Navbar = () => {
           textTransform: "capitalize"
         }}
       >
-        Olá {loggedUser?.currentUser.username}
+        Olá {user?.username}
       </Typography>
       <Button onClick={handleLogout} variant="contained">
         Sair

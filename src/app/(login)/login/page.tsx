@@ -12,46 +12,28 @@ import {
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Link from "next/link";
-import { FormEvent, useState } from "react";
-import { api } from "@/Utils/api";
-import Cookie from "js-cookie";
-import { useRouter } from "next/navigation";
-import { LoggedUserContext } from "@/contexts/LoggedUser";
+import { useState, useContext } from "react";
+import { AuthContext } from "@/contexts/AuthContext";
+import { useForm } from "react-hook-form";
 
 const Page = () => {
+  const { register, handleSubmit } = useForm();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
+  const { signIn } = useContext(AuthContext);
 
-  const router = useRouter();
-
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const handleSignIn = async (data: any) => {
     if (!emailInput || !passwordInput) {
       setError("Preencha e-mail e senha!");
       return;
     }
 
+    await signIn(data);
+
     setError("");
     setLoading(true);
-
-    const response = await api
-      .post("/api/auth/local", {
-        identifier: emailInput,
-        password: passwordInput
-      })
-      .then((response) => {
-        Cookie.set("AUTH_TOKEN", response.data.jwt);
-        router.push("/livros");
-      })
-      .catch((e) => {
-        setLoading(false);
-        if (e.response.status === 400) {
-          setError("Verifique seu login e senha!");
-        }
-      });
   };
   return (
     <Box
@@ -68,18 +50,25 @@ const Page = () => {
       <Typography component="h1" variant="h5">
         Faça seu login.
       </Typography>
-      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+      <Box
+        component="form"
+        onSubmit={handleSubmit(handleSignIn)}
+        noValidate
+        sx={{ mt: 1 }}
+      >
         <TextField
+          {...register("identifier")}
           margin="normal"
           required
           fullWidth
           label="E-mail"
-          name="email"
+          name="identifier"
           autoFocus
           onChange={(e) => setEmailInput(e.target.value)}
           disabled={loading}
         />
         <TextField
+          {...register("password")}
           margin="normal"
           required
           fullWidth
