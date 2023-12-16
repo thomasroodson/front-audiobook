@@ -8,10 +8,13 @@ import {
   CardActionArea,
   Link
 } from "@mui/material";
+import { useContext } from "react";
+import { AuthContext } from "@/contexts/AuthContext";
 
 const Page = () => {
   const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   const pathname = usePathname();
+  const { user } = useContext(AuthContext);
 
   return (
     <Box
@@ -20,6 +23,7 @@ const Page = () => {
         textAlign: "center"
       }}
     >
+      {user}
       <Grid container spacing={3}>
         {cards.map((card) => (
           <Grid item key={card} xs={12} sm={4} lg={3}>

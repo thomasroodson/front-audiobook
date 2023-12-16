@@ -29,11 +29,14 @@ const Page = () => {
       setError("Preencha e-mail e senha!");
       return;
     }
-
-    await signIn(data);
-
-    setError("");
-    setLoading(true);
+    await signIn(data)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        setLoading(false);
+        setError("Login ou senha incorretas!");
+      });
   };
   return (
     <Box

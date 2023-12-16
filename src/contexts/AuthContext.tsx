@@ -16,7 +16,7 @@ type SignInData = {
 };
 
 type AuthContextType = {
-  user: User | null;
+  user: string | null;
   signIn: (data: SignInData) => Promise<void>;
 };
 
@@ -24,7 +24,7 @@ export const AuthContext = createContext({} as AuthContextType);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<string | null>(null);
 
   async function signIn({ identifier, password }: SignInData) {
     const response = await api.post("/api/auth/local", {
@@ -32,9 +32,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       password
     });
 
+    const { username } = response.data.user;
+    setUser(username);
     Cookie.set("AUTH_TOKEN", response.data.jwt);
-
-    setUser(response.data.user);
 
     router.push("/livros");
   }
