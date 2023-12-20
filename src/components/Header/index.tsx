@@ -11,7 +11,8 @@ import {
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-import { ChangeEvent, MouseEvent, useState } from "react";
+import { MouseEvent, useState } from "react";
+import { blue } from "@mui/material/colors";
 
 type Props = {
   username?: string;
@@ -43,7 +44,7 @@ export const Header = ({ username }: Props) => {
       <Container
         sx={{
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "end",
           alignItems: "center"
         }}
       >
@@ -53,17 +54,18 @@ export const Header = ({ username }: Props) => {
             textTransform: "capitalize",
             color: "#000"
           }}
+          pt="20px"
         >
-          {!!username && `Olá ${username},`}
+          {!!username && username}
         </Typography>
         <div>
           <IconButton
-            size="large"
-            aria-label="account of current user"
+            size="medium"
             aria-controls="menu-appbar"
             aria-haspopup="true"
             onClick={handleMenu}
-            color="default"
+            color="primary"
+            sx={{ bgcolor: blue[50] }}
           >
             <AccountCircle />
           </IconButton>

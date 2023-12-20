@@ -11,7 +11,7 @@ type Props = {
 
 const Page = ({ username, data }: Props) => {
   return (
-    <Container component="section" sx={{ textAlign: "center", pt: 12 }}>
+    <Container component="section" sx={{ textAlign: "center", py: 12 }}>
       <Header username={username} />
       <Typography variant="h4" mt={3} mb={3} sx={{ fontWeight: "bold" }}>
         Seus Livros

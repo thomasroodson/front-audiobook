@@ -1,7 +1,10 @@
 import { Header } from "@/components/Header";
 import { Livro } from "@/types/Livro";
-import { Box, CardMedia, Container, Typography } from "@mui/material";
+import { Box, Button, CardMedia, Container, Typography } from "@mui/material";
+import Grid from "@mui/material/Unstable_Grid2";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
 
 type Props = {
   username: string;
@@ -9,36 +12,36 @@ type Props = {
 };
 
 const Page = ({ username, livroItem }: Props) => {
+  const router = useRouter();
   return (
-    <Container
-      component="section"
-      sx={{
-        display: "flex"
-      }}
-    >
+    <Container component="section">
       <Header username={username} />
-      <Box
-        mt={12}
-        textAlign="center"
-        p={2}
-        sx={{ backgroundColor: "#fafafa", width: "100%" }}
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        flexDirection="column"
-      >
-        <CardMedia
-          component="img"
-          image={`http://localhost:1337${livroItem.attributes.capa.data.attributes.formats.small.url}`}
-          sx={{
-            maxHeight: "390px",
-            objectFit: "contain",
-            my: 4
-          }}
-        />
-        <Typography variant="h5">{livroItem.attributes.title}</Typography>
+      <Box pt={12} mb={2}>
+        <Button
+          size="small"
+          startIcon={<ArrowBackIcon />}
+          onClick={() => router.back()}
+        >
+          Voltar
+        </Button>
       </Box>
-      <Box>.....</Box>
+      <Box sx={{ flexGrow: 1, pb: 12 }}>
+        <Grid container spacing={5}>
+          <Grid xs={12} md={4} textAlign="center">
+            <CardMedia
+              component="img"
+              image={`http://localhost:1337${livroItem.attributes.capa.data.attributes.formats.small.url}`}
+              sx={{
+                maxHeight: "390px",
+                objectFit: "contain",
+                my: 4
+              }}
+            />
+            <Typography variant="h5">{livroItem.attributes.title}</Typography>
+          </Grid>
+          <Grid xs={12} md={8}></Grid>
+        </Grid>
+      </Box>
     </Container>
   );
 };
@@ -60,12 +63,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     option
   );
   const { data } = await res.json();
-  const livroItem: Livro = data[0];
 
   return {
     props: {
       username,
-      livroItem
+      livroItem: data[0]
     }
   };
 };
