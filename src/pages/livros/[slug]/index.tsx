@@ -5,6 +5,8 @@ import Grid from "@mui/material/Unstable_Grid2";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
+import AudioPlayer from "@/components/AudioPlayer";
+import Head from "next/head";
 
 type Props = {
   username: string;
@@ -15,6 +17,9 @@ const Page = ({ username, livroItem }: Props) => {
   const router = useRouter();
   return (
     <Container component="section">
+      <Head>
+        <title>Livro - {livroItem.attributes.title}</title>
+      </Head>
       <Header username={username} />
       <Box pt={12} mb={2}>
         <Button
@@ -39,7 +44,17 @@ const Page = ({ username, livroItem }: Props) => {
             />
             <Typography variant="h5">{livroItem.attributes.title}</Typography>
           </Grid>
-          <Grid xs={12} md={8}></Grid>
+          <Grid
+            xs={12}
+            md={8}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+            <AudioPlayer />
+          </Grid>
         </Grid>
       </Box>
     </Container>
