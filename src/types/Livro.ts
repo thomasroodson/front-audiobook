@@ -1,3 +1,5 @@
+import { Track } from "./ArquivoMp3";
+
 export type AttributesCapa = {
   name: string;
   hash: string;
@@ -43,9 +45,7 @@ export type AttributesLivro = {
     createdAt: string;
     updatedAt: string;
   };
-  arquivo: {
-    data: any;
-  };
+  arquivos: Track[];
 };
 export type Livro = {
   id: number;

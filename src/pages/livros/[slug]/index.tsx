@@ -5,8 +5,8 @@ import Grid from "@mui/material/Unstable_Grid2";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import AudioPlayer from "@/components/AudioPlayer";
 import Head from "next/head";
+import Player from "@/components/AudioPlayer";
 
 type Props = {
   username: string;
@@ -53,7 +53,7 @@ const Page = ({ username, livroItem }: Props) => {
               justifyContent: "center"
             }}
           >
-            <AudioPlayer />
+            <Player />
           </Grid>
         </Grid>
       </Box>
@@ -78,7 +78,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     option
   );
   const { data } = await res.json();
-
   return {
     props: {
       username,
