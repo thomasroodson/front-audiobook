@@ -1,5 +1,6 @@
 "use client";
-import AudioPlayer from "react-h5-audio-player";
+import styles from "./AudioPlayer.module.scss";
+import AudioPlayer, { RHAP_UI } from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import PlayCircleFilledRoundedIcon from "@mui/icons-material/PlayCircleFilledRounded";
 import PauseCircleFilledRoundedIcon from "@mui/icons-material/PauseCircleFilledRounded";
@@ -8,6 +9,7 @@ import SkipNextRoundedIcon from "@mui/icons-material/SkipNextRounded";
 import VolumeUpRoundedIcon from "@mui/icons-material/VolumeUpRounded";
 import VolumeOffRoundedIcon from "@mui/icons-material/VolumeOffRounded";
 import { useState } from "react";
+import { Box, Container } from "@mui/material";
 
 const Player = () => {
   const playlist = [
@@ -30,23 +32,35 @@ const Player = () => {
     );
   };
   return (
-    <AudioPlayer
-      //autoPlay
-      src={playlist[currentTrack].src}
-      preload="metadata"
-      showSkipControls
-      showJumpControls={false}
-      onClickNext={handleClickNext}
-      onClickPrevious={handleClickPrev}
-      customIcons={{
-        play: <PlayCircleFilledRoundedIcon fontSize="large" />,
-        pause: <PauseCircleFilledRoundedIcon fontSize="large" />,
-        previous: <SkipPreviousRoundedIcon fontSize="large" />,
-        next: <SkipNextRoundedIcon fontSize="large" />,
-        volume: <VolumeUpRoundedIcon />,
-        volumeMute: <VolumeOffRoundedIcon />
+    <Container
+      maxWidth="sm"
+      sx={{
+        display: "flex",
+        flexDirection: "column"
       }}
-    />
+    >
+      <AudioPlayer
+        className={styles.player}
+        //autoPlay
+        src={playlist[currentTrack].src}
+        header="1. Introdução"
+        preload="metadata"
+        showSkipControls
+        showJumpControls={false}
+        onClickNext={handleClickNext}
+        onClickPrevious={handleClickPrev}
+        customIcons={{
+          play: <PlayCircleFilledRoundedIcon fontSize="large" />,
+          pause: <PauseCircleFilledRoundedIcon fontSize="large" />,
+          previous: <SkipPreviousRoundedIcon fontSize="large" />,
+          next: <SkipNextRoundedIcon fontSize="large" />,
+          volume: <VolumeUpRoundedIcon />,
+          volumeMute: <VolumeOffRoundedIcon />
+        }}
+        defaultCurrentTime="00:00"
+        defaultDuration=""
+      />
+    </Container>
   );
 };
 

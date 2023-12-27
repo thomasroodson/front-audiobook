@@ -7,6 +7,7 @@ import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Player from "@/components/AudioPlayer";
+import Playlist from "@/components/Playlist";
 
 type Props = {
   username: string;
@@ -17,9 +18,6 @@ const Page = ({ username, livroItem }: Props) => {
   const router = useRouter();
   return (
     <Container component="section">
-      <Head>
-        <title>Livro - {livroItem.attributes.title}</title>
-      </Head>
       <Header username={username} />
       <Box pt={12} mb={2}>
         <Button
@@ -50,10 +48,12 @@ const Page = ({ username, livroItem }: Props) => {
             sx={{
               display: "flex",
               alignItems: "center",
-              justifyContent: "center"
+              justifyContent: "center",
+              flexDirection: "column"
             }}
           >
             <Player />
+            <Playlist />
           </Grid>
         </Grid>
       </Box>
