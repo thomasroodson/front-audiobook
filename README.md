@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Front Audiobook
 
-## Getting Started
+A front-end application for browsing audiobook content and listening through an audio player. The project separates book pages, shared interface components, API access, and audio playback into dedicated modules.
 
-First, run the development server:
+I built this project with Next.js and React, using Material UI for interface components and a dedicated audio-player package for playback controls.
+
+## Features and implementation
+
+- Book-related pages under the `livros` section
+- Reusable header and footer components
+- Dedicated audio player component
+- API client separated from the UI
+- Form handling with React Hook Form
+- Cookie support and middleware for request handling
+
+## Tech stack
+
+- Next.js 14
+- React 18
+- TypeScript
+- Material UI
+- Emotion
+- Axios
+- React H5 Audio Player
+- React Hook Form
+- Sass
+
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+For a production build:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## Screenshots
 
-To learn more about Next.js, take a look at the following resources:
+Screenshots of the actual application should be added here after running the project. No rendered UI captures are currently stored in the repository.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+This README describes the front-end structure. Availability of API-backed content depends on the service configured in the project.
